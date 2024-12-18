@@ -13,7 +13,7 @@ import {
 } from "@/config";
 import { AuthContext } from "@/context/auth-context";
 import { InstructorContext } from "@/context/instructor-context";
-import { updateCourseByIdService ,fetchInstructorCourseDetailsService,addNewCourseService} from "@/Service";
+import { fetchInstructorCourseDetailsService,addNewCourseService,updateCourseByIdService } from "@/Service";
 // import {
 //   addNewCourseService,
 //   fetchInstructorCourseDetailsService,
@@ -157,16 +157,16 @@ function AddNewCoursePage() {
                 <TabsTrigger value="settings">Settings</TabsTrigger>
               </TabsList>
               <TabsContent value="curriculum">
-                {/* <CourseCurriculum /> */}
-                <CourseCurriculum/>
+                <CourseCurriculum />
+
               </TabsContent>
               <TabsContent value="course-landing-page">
                 <CourseLanding />
-                {/* <CourseLanding/> */}
+
               </TabsContent>
               <TabsContent value="settings">
-                {/* <CourseSettings /> */}
-                <CourseSettings/>
+                <CourseSettings />
+ 
               </TabsContent>
             </Tabs>
           </div>

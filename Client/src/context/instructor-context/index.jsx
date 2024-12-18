@@ -18,7 +18,7 @@ export default function InstructorProvider({ children }) {
     useState(0);
   const [instructorCoursesList, setInstructorCoursesList] = useState([]);
   const [currentEditedCourseId, setCurrentEditedCourseId] = useState(null);
-
+// const [currentEditedCourseId,setCurrentEditedCourseId] = useState(null)
   return (
     <InstructorContext.Provider
       value={{

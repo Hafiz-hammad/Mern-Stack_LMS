@@ -54,6 +54,21 @@ element={
 
 
 /  >
+ <Route 
+  path='/instructor/edit-course/:courseId'
+element={
+  <RouteGuard
+  element={
+    
+    <AddNewCourse/>}
+    authenticated={auth?.authenticate}
+    user={auth?.user}
+  /> 
+}
+
+
+
+/  >
 
 <Route
 
