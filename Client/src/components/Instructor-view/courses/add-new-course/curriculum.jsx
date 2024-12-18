@@ -1,17 +1,21 @@
-// import MediaProgressBar from '@/components/media-progress-bar';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import VideoPlayer from '@/components/vedio-player';
-import { InstructorContext } from '@/context/instructor-context'
-import React, { useContext } from 'react'
-import { mediaDeleteService, mediaUploadService } from '@/Service';
-import { Upload } from 'lucide-react';
+import MediaProgressbar from "@/components/media-progress-bar";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import VideoPlayer from "@/components/vedio-player";
+// import VideoPlayer from "@/components/video-player";
 import { courseCurriculumInitialFormData } from "@/config";
-
-import MediaProgressbar from '@/components/media-progress-bar';
+import { InstructorContext } from "@/context/instructor-context";
+import { mediaDeleteService ,mediaBulkUploadService,mediaUploadService} from "@/Service";
+// import {
+//   mediaBulkUploadService,
+//   mediaDeleteService,
+//   mediaUploadService,
+// } from "@/services";
+import { Upload } from "lucide-react";
+import { useContext, useRef } from "react";
 
 function CourseCurriculum() {
   const {
@@ -23,6 +27,7 @@ function CourseCurriculum() {
     setMediaUploadProgressPercentage,
   } = useContext(InstructorContext);
 
+  const bulkUploadInputRef = useRef(null);
 
   function handleNewLecture() {
     setCourseCurriculumFormData([
@@ -113,6 +118,9 @@ function CourseCurriculum() {
     });
   }
 
+  function handleOpenBulkUploadDialog() {
+    bulkUploadInputRef.current?.click();
+  }
 
   function areAllCourseCurriculumFormDataObjectsEmpty(arr) {
     return arr.every((obj) => {
@@ -187,6 +195,7 @@ function CourseCurriculum() {
         <div>
           <Input
             type="file"
+            ref={bulkUploadInputRef}
             accept="video/*"
             multiple
             className="hidden"
@@ -198,6 +207,7 @@ function CourseCurriculum() {
             htmlFor="bulk-media-upload"
             variant="outline"
             className="cursor-pointer"
+            onClick={handleOpenBulkUploadDialog}
           >
             <Upload className="w-4 h-5 mr-2" />
             Bulk Upload
@@ -250,6 +260,7 @@ function CourseCurriculum() {
                       width="450px"
                       height="200px"
                     />
+                    
                     <Button onClick={() => handleReplaceVideo(index)}>
                       Replace Video
                     </Button>
