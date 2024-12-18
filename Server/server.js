@@ -4,6 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const authRoutes = require("./routes/auth-routes/index");
 const mediaRoutes = require("./routes/instructor-routes/media-routes");
+const instructorCourseRoutes = require("./routes/instructor-routes/course-routes");
 const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
@@ -27,6 +28,7 @@ mongoose.connect(MONGO_URI).then(()=>console.log("Mongo Db Is connected Succsess
 // Routeconfigration 
   app.use("/auth", authRoutes);
   app.use("/media", mediaRoutes);
+  app.use("/instructor/course", instructorCourseRoutes);
 
 
 
