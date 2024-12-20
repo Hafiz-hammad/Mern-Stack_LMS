@@ -1,23 +1,24 @@
 import { Button } from '@/components/ui/button';
-import { AuthContext } from '@/context/auth-context';
-import {React, useContext } from 'react'
-import { useNavigate } from 'react-router-dom';
+import {React, useContext, useEffect } from 'react'
 import banner from '../../../../public/banner.webp'
 import { courseCategories } from '@/config';
+import { StudentContext } from '@/context/student-context';
+import { fetchStudentViewCourseListService } from '@/Service';
 function StudientHomePage  () {
-  const  {resetCredentials} = useContext(AuthContext);
-  const navigate = useNavigate();
-   
+  const { studentCoursesList, setStudentCoursesList } = useContext(StudentContext);
+  
+async function fetchAllStudentViewCourses(){
+  const response = await fetchStudentViewCourseListService();
+  if(response?.success) setStudentCoursesList(response?.data)
+  console.log(response) 
+}
+
+useEffect(()=>{
+fetchAllStudentViewCourses()
+},[])
+
   
 
-  function handleLogout() {
-    console.log('Logout clicked');
-    resetCredentials();
-    sessionStorage.clear();
-    console.log('Session storage cleared');
-  
-    navigate('/auth'); // Redirect to login page
-  }
   
   return (
     <div className='min-h-screen bg-white'>
@@ -60,8 +61,30 @@ function StudientHomePage  () {
 </div>
 
       </section>
-    </div>
+<section className='py-12 px-4 lg:px-8'>
 
+<h2 className='text-2xl font-bold mb-6'>Featured Courses</h2>
+<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'>
+  {
+    studentCoursesList && studentCoursesList.length >0?
+    studentCoursesList.map(courseItem=> 
+    <div className='border rounded-lg overflow-hidden shadow cursor-pointer'>
+<img
+src={courseItem?.image}
+width={300}
+height={150}
+className='w-full h-40 object-cover'
+
+/>
+<div className='p-4'>
+  <h3 className='font-bold mb-2'>{courseItem.title}</h3>
+
+</div>
+    </div>)  :<h1>No courses found</h1>
+  }
+</div>
+</section>
+    </div>
 
   )
 }
