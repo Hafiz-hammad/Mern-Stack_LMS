@@ -72,7 +72,7 @@ element={
 
 <Route
 
-path='/'
+path='home'
 element={<RouteGuard
 element={<StudientViewCommonLayout/>}
 
@@ -80,6 +80,8 @@ authenticated={auth?.authenticate}
 user={auth?.user}
 />}
 />
+
+
   <Route
   path='home'
   element={<StudientHomePage/>}
