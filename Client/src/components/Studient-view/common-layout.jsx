@@ -1,18 +1,18 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import StudentHomePage from '@/pages/studient/home'
 import StudentViewCommonHeader from './header'
-import StudientHomePage from '@/pages/studient/home'
 
-const StudientViewCommonLayout = () => {
+const StudentViewCommonLayout = () => {
   return (
     <div>
       {/* <h1>Hammad</h1> */}
-     <Outlet/>
 
-<StudentViewCommonHeader/>
-<StudientHomePage/>
+<StudentViewCommonHeader  />
+     <Outlet/>
+{/* <StudentHomePage/> */}
     </div>
   )
 }
 
-export default StudientViewCommonLayout
+export default StudentViewCommonLayout

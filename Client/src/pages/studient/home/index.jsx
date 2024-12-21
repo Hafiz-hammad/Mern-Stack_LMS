@@ -4,7 +4,12 @@ import banner from '../../../../public/banner.webp'
 import { courseCategories } from '@/config';
 import { StudentContext } from '@/context/student-context';
 import { fetchStudentViewCourseListService } from '@/Service';
-function StudientHomePage  () {
+// import { useNavigate } from 'react-router-dom';
+
+
+function StudentHomePage  () {
+
+  
   const { studentCoursesList, setStudentCoursesList } = useContext(StudentContext);
   
 async function fetchAllStudentViewCourses(){
@@ -91,4 +96,4 @@ className='w-full h-40 object-cover'
   )
 }
 
-export default StudientHomePage;
+export default StudentHomePage;
