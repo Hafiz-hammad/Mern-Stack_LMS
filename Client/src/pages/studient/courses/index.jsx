@@ -59,8 +59,14 @@ else{
   
 
 }
-  async function fetchAllStudentViewCourses(){
-      const response = await fetchStudentViewCourseListService();
+  async function fetchAllStudentViewCourses(filters, sort){
+
+    const query = new URLSearchParams({
+...filters,
+sortBy :sort
+
+    })
+      const response = await fetchStudentViewCourseListService(query);
       if(response?.success) setStudentCoursesList(response?.data)
       console.log("response", response) 
     }
@@ -71,8 +77,10 @@ setSearchParams(new URLSearchParams(buildQueryStringForFilters))
 },[filters])
 
     useEffect(()=>{
-    fetchAllStudentViewCourses()
-    },[])
+
+      if(filters!==null && sort !== null)
+    fetchAllStudentViewCourses(filters,sort)
+    },[filters, sort])
     console.log(filters)
 
   return (
