@@ -15,7 +15,7 @@ function StudentHomePage  () {
 async function fetchAllStudentViewCourses(){
   const response = await fetchStudentViewCourseListService();
   if(response?.success) setStudentCoursesList(response?.data)
-  console.log(response) 
+  console.log("response", response) 
 }
 
 useEffect(()=>{
