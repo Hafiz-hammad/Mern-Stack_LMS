@@ -14,12 +14,28 @@ import { StudentContext } from '@/context/student-context';
 import { fetchStudentViewCourseListService } from '@/Service';
 import { ArrowUpDownIcon, KeyIcon } from 'lucide-react';
 import React, { useContext, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 const studentViewCoursesPage = () => {
   const [sort, setSort] = useState('price-lowtohigh');
   const [filters, setFilters] = useState({});
   const { studentCoursesList, setStudentCoursesList } = useContext(StudentContext);
- 
+const [searchParams, setSearchParams] =useSearchParams() 
+
+function createSearchParamsHelper (filterParams){
+const queryParams =[];
+for (const [key , value] of Object.entries(filterParams)){
+  if(Array.isArray(value) && value.length > 0){
+const paramValue = value.join(',')
+
+queryParams.push(`${key}=${encodeURIComponent(paramValue)}`)
+
+
+  }
+}
+return queryParams.join('&')
+}
+
  function handleFilterOnChange (getSectionId ,getCurrentOption){
 
 let cpyFilters={ ...filters };
@@ -49,6 +65,11 @@ else{
       console.log("response", response) 
     }
     
+useEffect(()=>{
+const buildQueryStringForFilters = createSearchParamsHelper(filters)
+setSearchParams(new URLSearchParams(buildQueryStringForFilters))
+},[filters])
+
     useEffect(()=>{
     fetchAllStudentViewCourses()
     },[])
@@ -73,7 +94,12 @@ else{
                       className="flex font-medium items-center gap-3"
                     >
                       <Checkbox
-                        checked={false}
+                        checked={
+filters && Object.keys(filters).length>0
+&& filters[KeyItem] && filters[KeyItem].indexOf(option.id)>-1
+
+
+                        }
                         onCheckedChange={() =>
                           handleFilterOnChange(KeyItem, option)
                         }
