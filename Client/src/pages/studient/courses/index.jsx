@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   DropdownMenu,
@@ -10,13 +10,24 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Label } from '@/components/ui/label';
 import { filterOptions, sortOptions } from '@/config';
+import { StudentContext } from '@/context/student-context';
+import { fetchStudentViewCourseListService } from '@/Service';
 import { ArrowUpDownIcon, KeyIcon } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 const studentViewCoursesPage = () => {
   const [sort, setSort] = useState('');
-  console.log('Sort Options:', sortOptions);
-  console.log('Selected Sort:', sort);
+  const { studentCoursesList, setStudentCoursesList } = useContext(StudentContext);
+    async function fetchAllStudentViewCourses(){
+      const response = await fetchStudentViewCourseListService();
+      if(response?.success) setStudentCoursesList(response?.data)
+      console.log("response", response) 
+    }
+    
+    useEffect(()=>{
+    fetchAllStudentViewCourses()
+    },[])
+    
 
   return (
     <div className="container mx-auto p-4">
@@ -84,8 +95,43 @@ const studentViewCoursesPage = () => {
             </DropdownMenu>
             <span className='text-sm text-black font-bold'>10 Results</span>
           </div>
+<div className='space-y-4'>
 
-          {/* Other content can go here */}
+{
+
+  studentCoursesList && studentCoursesList.length>0?
+    studentCoursesList.map(courseItem=>(
+
+      <Card key={courseItem._id} className='cursor-pointer'> 
+
+        <CardContent className='flex gap-4 p-4'>
+<div className='w-48 h-32 flex-shrink-0'>
+<img
+src={courseItem?.image}
+className='w-full h-full object-cover'
+/>
+</div>
+<div className='flex-1 '>
+<CardTitle className='text-xl mb-2'>
+  {courseItem?.title}
+</CardTitle>
+<p className='text-sm text-gray-600 mb-1'>
+  Created By<span className='font-bold'>  {courseItem?.instructorName}
+  </span>
+   </p>
+   <p className='mt-3 text-[16px] text-gray-600 mb-2'>
+    {
+      `${courseItem?.curriculum?.length <=1?'Lecture' : 'Lectures'} - ${courseItem?.level.toUpperCase()} Level`
+    }
+   </p>
+   <p className='font-bold text-lg '>{`${courseItem?.pricing}`}</p>
+</div>
+        </CardContent>
+      </Card>
+    )): <h1>No Corses Found</h1>
+}
+
+</div>
         </main>
       </div>
     </div>
