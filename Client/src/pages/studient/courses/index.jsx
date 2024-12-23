@@ -16,9 +16,34 @@ import { ArrowUpDownIcon, KeyIcon } from 'lucide-react';
 import React, { useContext, useEffect, useState } from 'react';
 
 const studentViewCoursesPage = () => {
-  const [sort, setSort] = useState('');
+  const [sort, setSort] = useState('price-lowtohigh');
+  const [filters, setFilters] = useState({});
   const { studentCoursesList, setStudentCoursesList } = useContext(StudentContext);
-    async function fetchAllStudentViewCourses(){
+ 
+ function handleFilterOnChange (getSectionId ,getCurrentOption){
+
+let cpyFilters={ ...filters };
+const indexOfCurrentSection = Object.keys(cpyFilters).indexOf(getSectionId)
+console.log(indexOfCurrentSection,getSectionId)
+if(indexOfCurrentSection===-1){
+  cpyFilters={
+    ...cpyFilters,
+    [getSectionId] : [getCurrentOption.id]
+  }
+  console.log(cpyFilters)
+}
+else{
+  const indexOfCurrentOption = cpyFilters[getSectionId].indexOf(getCurrentOption.id);
+  if(indexOfCurrentOption === -1) 
+    cpyFilters[getSectionId].push(getCurrentOption.id)
+    else cpyFilters[getSectionId].splice(indexOfCurrentOption,1  )
+  }
+  setFilters(cpyFilters)
+  sessionStorage.setItem('filters', JSON.stringify(cpyFilters));
+  
+
+}
+  async function fetchAllStudentViewCourses(){
       const response = await fetchStudentViewCourseListService();
       if(response?.success) setStudentCoursesList(response?.data)
       console.log("response", response) 
@@ -27,7 +52,7 @@ const studentViewCoursesPage = () => {
     useEffect(()=>{
     fetchAllStudentViewCourses()
     },[])
-    
+    console.log(filters)
 
   return (
     <div className="container mx-auto p-4">
@@ -50,7 +75,7 @@ const studentViewCoursesPage = () => {
                       <Checkbox
                         checked={false}
                         onCheckedChange={() =>
-                          handleFilterOnChange(KeyItem, option.id)
+                          handleFilterOnChange(KeyItem, option)
                         }
                       />
                       {option.label}
