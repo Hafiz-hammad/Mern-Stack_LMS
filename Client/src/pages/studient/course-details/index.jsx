@@ -1,18 +1,22 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { Skeleton } from '@/components/ui/skeleton'
 import VideoPlayer from '@/components/vedio-player'
 import { StudentContext } from '@/context/student-context'
 import { fetchStudentViewCourseDetailsService } from '@/Service'
-import { CheckCircle, Globe, PlayCircle } from 'lucide-react'
-import React, { useContext, useEffect } from 'react'
+import { CheckCircle, Copy, Globe, PlayCircle } from 'lucide-react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 
 const StudendViewCourseDetailsPage = () => {
 
   const { studentViewCourseDetails,setStudentViewCourseDetails,currentCourseDetailsId, setCurrentCourseDetailsId,loadingState, setLoadingState,
   } = useContext(StudentContext)
-
+const [displayCurrentVideoFreePreview, setDisplayCurrentVideoFreePreview]=useState(null)
+const [showFreePreviewDialog, setShowFreePreviewDialog]=useState(false)
 const {id}= useParams();
 const location = useLocation();
 
@@ -27,8 +31,17 @@ async function fetchStudentViewCourseDetails(){
     setLoadingState(false)    
 
   }
-
 }
+
+function handleSetFreePreview(getCurrentVideoInfo){
+  console.log(getCurrentVideoInfo)
+  setDisplayCurrentVideoFreePreview(getCurrentVideoInfo?.public_id)
+}
+useEffect(()=>{
+if(displayCurrentVideoFreePreview !==null) setShowFreePreviewDialog(true)
+},[displayCurrentVideoFreePreview])
+
+
 useEffect(()=>{
   
   if(currentCourseDetailsId !== null ) fetchStudentViewCourseDetails()
@@ -87,7 +100,10 @@ studentViewCourseDetails !== null
       
       
       <li key={index} className='flex items-start'>
-        <CheckCircle className='mr-2 h-5 w-5 text-green-500 flex-shrink-0' / >
+        <CheckCircle className='mr-2 h-5 w-5 text-green-500 flex-shrink-0' 
+        / >
+     
+        
         <span>{objective}</span>
            </li>)
     }
@@ -163,7 +179,44 @@ Buy Now !
 </Card>
   </aside>
 </div>
+<Dialog open={showFreePreviewDialog} 
 
+onOpenChange={()=>{
+  setShowFreePreviewDialog(false)
+  setDisplayCurrentVideoFreePreview(null)
+}}>
+<DialogContent className="sm:max-w-md">
+  <DialogHeader>
+    <DialogTitle>Share link</DialogTitle>
+    <DialogDescription>
+      Anyone who has this link will be able to view this.
+    </DialogDescription>
+  </DialogHeader>
+  <div className="flex items-center space-x-2">
+    <div className="grid flex-1 gap-2">
+      <Label htmlFor="link" className="sr-only">
+        Link
+      </Label>
+      <Input
+        id="link"
+        defaultValue="https://ui.shadcn.com/docs/installation"
+        readOnly
+      />
+    </div>
+    <Button type="submit" size="sm" className="px-3">
+      <span className="sr-only">Copy</span>
+      <Copy />
+    </Button>
+  </div>
+  <DialogFooter className="sm:justify-start">
+    <DialogClose asChild>
+      <Button type="button" variant="secondary">
+        Close
+      </Button>
+    </DialogClose>
+  </DialogFooter>
+</DialogContent>
+</Dialog>
   </div>
 }
 
