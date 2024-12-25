@@ -4,6 +4,14 @@ import { createContext, useState } from "react";
 
 
     export default function StudentProvider ({children}){
+
+
         const [studentCoursesList,setStudentCoursesList]=useState([])
-        return <StudentContext.Provider value={{studentCoursesList,setStudentCoursesList}} >{children}</StudentContext.Provider>
+
+const [loadingState, setLoadingState] = useState(true)
+
+
+        return <StudentContext.Provider value={{studentCoursesList,setStudentCoursesList,
+            loadingState, setLoadingState
+        }} >{children}</StudentContext.Provider>
     }
