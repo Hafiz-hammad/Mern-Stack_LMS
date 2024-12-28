@@ -11,15 +11,16 @@ import {
 } from '@/components/ui/dialog';
 import { Skeleton } from '@/components/ui/skeleton';
 import VideoPlayer from '@/components/vedio-player';
-import { StudentContext } from '@/context/student-context';
+// import { StudentContext } from '@/context/student-context';
 import { fetchStudentViewCourseDetailsService } from '@/Service';
 import { CheckCircle, Copy, Globe, Lock, PlayCircle } from 'lucide-react';
 import React, { useContext, useEffect, useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
+import { StudentContext } from '@/context/student-context';
 
-const StudendViewCourseDetailsPage = () => {
+const UnlockScreen = () => {
   const navigate = useNavigate();
   const {
     studentViewCourseDetails,
@@ -65,7 +66,7 @@ const StudendViewCourseDetailsPage = () => {
 
       if (response.data.success) {
         // Show success toast
-        toast.success("Congratulations on your purchase! Let’s start your learning journey!", {
+        toast.success("You'r all set", {
           position: "top-right",
           duration: 3000,
         });
@@ -110,7 +111,8 @@ const StudendViewCourseDetailsPage = () => {
       : -1;
 
   return (
-    <div className="mx-auto p-4 pt-20">
+    <div className="w-full mx-auto p-4 pt-9">
+     
       <div className="bg-gray-900 text-white p-8 rounded-t-lg pt-">
         <h1 className="text-3xl font-bold mb-4">{studentViewCourseDetails?.title}</h1>
         <p className="text-xl mb-4">{studentViewCourseDetails?.subtitle}</p>
@@ -130,59 +132,13 @@ const StudendViewCourseDetailsPage = () => {
 
       <div className="flex flex-col md:flex-row gap-8 mt-8">
         <main className="flex-grow">
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>What you'll Learn</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                {studentViewCourseDetails?.objectives.split(',').map((objective, index) => (
-                  <li key={index} className="flex items-start">
-                    <CheckCircle className="mr-2 h-5 w-5 text-green-500 flex-shrink-0" />
-                    <span>{objective}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>Course Description</CardTitle>
-            </CardHeader>
-            <CardContent>{studentViewCourseDetails?.description}</CardContent>
-          </Card>
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>Course Curriculum</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {studentViewCourseDetails?.curriculum?.map((curriculumItem, index) => (
-                <li
-                  key={index}
-                  className={`${
-                    curriculumItem?.freePreview ? 'cursor-pointer' : 'cursor-not-allowed'
-                  } flex items-center mb-4`}
-                  onClick={
-                    curriculumItem?.freePreview
-                      ? () => handleSetFreePreview(curriculumItem)
-                      : null
-                  }
-                >
-                  {curriculumItem?.freePreview ? (
-                    <PlayCircle className="mr-2 h-4 w-4" />
-                  ) : (
-                    <Lock className="mr-2 h-4 w-4" />
-                  )}
-                  <span>{curriculumItem?.title}</span>
-                </li>
-              ))}
-            </CardContent>
-          </Card>
-        </main>
+         
+         
+         </main>
 
         <aside className="w-full md:w-[500px]">
           <Card className="sticky top-4">
-            <CardContent className="p-6">
+            <CardContent className="p-9">
               <div className="aspect-video mb-4 rounded-lg flex items-center justify-center">
                 <VideoPlayer
                   url={
@@ -195,12 +151,12 @@ const StudendViewCourseDetailsPage = () => {
                 />
               </div>
               <div className="mb-4">
-                <span className="text-3xl font-bold">{studentViewCourseDetails?.pricing}</span>
+                
               </div>
 
               {/* Buy Now Button */}
               <Button onClick={handleBuyNowClick} className="w-full" disabled={loading}>
-                {loading ? "Processing..." : "Buy Now"}
+                {loading ? "Processing..." : "Start Watching"}
               </Button>
             </CardContent>
           </Card>
@@ -227,6 +183,16 @@ const StudendViewCourseDetailsPage = () => {
               width="450px"
               height="200px"
             />
+              <VideoPlayer
+              url={displayCurrentVideoFreePreview}
+              width="450px"
+              height="200px"
+            />
+              <VideoPlayer
+              url={displayCurrentVideoFreePreview}
+              width="450px"
+              height="200px"
+            />
           </div>
           <DialogFooter>
             <DialogClose asChild>
@@ -240,4 +206,4 @@ const StudendViewCourseDetailsPage = () => {
   );
 };
 
-export default StudendViewCourseDetailsPage;
+export default UnlockScreen;

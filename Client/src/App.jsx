@@ -13,6 +13,7 @@ import RouteGuard from "./components/route-gaurd";
 import StudentViewCommonLayout from "./components/Studient-view/common-layout";
 import StudentHomePage from "./pages/studient/home";
 import StudendViewCourseDetailsPage from "./pages/studient/course-details";
+import BuyNow from "./components/Buy-Now";
 
 function App() {
   const { auth } = useContext(AuthContext);
@@ -72,7 +73,7 @@ function App() {
         <Route path="home" element={<StudentHomePage />} />
         <Route path="courses" element={<StudentViewCoursesPage />} />
         <Route path="course/details/:id" element={<StudendViewCourseDetailsPage/>}/>
-       
+       <Route path="/buyNow" element={<BuyNow/>}/>
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

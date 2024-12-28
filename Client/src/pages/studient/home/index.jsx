@@ -8,6 +8,7 @@ import { fetchStudentViewCourseListService } from '@/Service';
 
 
 function StudentHomePage  () {
+  const { showStudentPortalButton ,setShowStudentPortalButton} = useContext(StudentContext);
 
   
   const { studentCoursesList, setStudentCoursesList } = useContext(StudentContext);
@@ -18,6 +19,17 @@ async function fetchAllStudentViewCourses(){
   console.log("response", response) 
 }
 
+useEffect(() => {
+  const storedButtonState = localStorage.getItem('showStudentPortalButton');
+  if (storedButtonState) {
+    setShowStudentPortalButton(JSON.parse(storedButtonState));
+  }
+}, []);
+
+useEffect(() => {
+  localStorage.setItem('showStudentPortalButton', JSON.stringify(showStudentPortalButton));
+}, [showStudentPortalButton]);
+
 useEffect(()=>{
 fetchAllStudentViewCourses()
 },[])
@@ -26,10 +38,14 @@ fetchAllStudentViewCourses()
 
   
   return (
-    <div className='min-h-screen bg-white'>
+    <div className='min-h-screen bg-white pt-16'>
       <section className='flex flex-col lg:flex-row items-center justify-between py-8 px-4 lg:px-8'>
 
 <div className='lg:w-1/2 lg:pr-12'>
+
+{showStudentPortalButton && (
+          <Button>Student Portal</Button>
+        )}
 <h1 className='text-4xl font-bold mb-4'>
   Learning Thats Gets You
 </h1>

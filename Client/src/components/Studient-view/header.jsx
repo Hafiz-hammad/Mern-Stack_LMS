@@ -15,13 +15,14 @@ const {resetCredentials} =useContext(AuthContext)
   }
         return (
 
-<header className='flex items-center justify-between border-b p-4'>
+<header className='flex items-center z-10 justify-between border-b p-4 fixed w-full bg-black bg-opacity-60 text-white
+  '>
     <div className='flex items-center space-x-4'>
 
 <Link to={'/home'} className='flex items-center hover:text-black'>
 
 <GraduationCap className='h-8 w-8 mr-4'/>
-<span className='font-extrabold md:text-xl text-[14px]'>KnowledgeNest</span>
+<span className='font-extrabold md:text-xl text-[14px] '>KnowledgeNest</span>
 </Link>
 <div className='flex items-center space-x-1'>
 
