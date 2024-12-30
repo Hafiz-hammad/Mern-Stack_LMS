@@ -72,8 +72,7 @@ const UnlockScreen = () => {
         });
 
         // Navigate to /buyNow after the toast
-        setTimeout(() => navigate('/buyNow'), 3000);
-      } else {
+              } else {
         toast.error("Something went wrong. Please try again.");
       }
     } catch (error) {
@@ -111,9 +110,9 @@ const UnlockScreen = () => {
       : -1;
 
   return (
-    <div className="w-full mx-auto p-4 pt-9">
+    <div className="w-full mx-auto p-4 pt-16">
      
-      <div className="bg-gray-900 text-white p-8 rounded-t-lg pt-">
+      <div className="bg-gray-900 text-white p-8 rounded-t-lg pt-19">
         <h1 className="text-3xl font-bold mb-4">{studentViewCourseDetails?.title}</h1>
         <p className="text-xl mb-4">{studentViewCourseDetails?.subtitle}</p>
         <div className="flex items-center space-x-4 mt-2 text-sm">
@@ -170,7 +169,7 @@ const UnlockScreen = () => {
           setDisplayCurrentVideoFreePreview(null);
         }}
       >
-        <DialogContent className="w-[600px]">
+        <DialogContent className="w-[900px]">
           <DialogHeader>
             <DialogTitle>Course Free Preview</DialogTitle>
             <DialogDescription>
@@ -183,16 +182,7 @@ const UnlockScreen = () => {
               width="450px"
               height="200px"
             />
-              <VideoPlayer
-              url={displayCurrentVideoFreePreview}
-              width="450px"
-              height="200px"
-            />
-              <VideoPlayer
-              url={displayCurrentVideoFreePreview}
-              width="450px"
-              height="200px"
-            />
+              
           </div>
           <DialogFooter>
             <DialogClose asChild>

@@ -14,6 +14,7 @@ import StudentViewCommonLayout from "./components/Studient-view/common-layout";
 import StudentHomePage from "./pages/studient/home";
 import StudendViewCourseDetailsPage from "./pages/studient/course-details";
 import BuyNow from "./components/Buy-Now";
+import UnlockScreen from "./components/unlock-screen";
 
 function App() {
   const { auth } = useContext(AuthContext);
@@ -74,6 +75,7 @@ function App() {
         <Route path="courses" element={<StudentViewCoursesPage />} />
         <Route path="course/details/:id" element={<StudendViewCourseDetailsPage/>}/>
        <Route path="/buyNow" element={<BuyNow/>}/>
+       <Route path="/unlockscreen" element={<UnlockScreen/>}/>
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
